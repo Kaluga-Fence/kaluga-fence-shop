@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+{% block title %}Оформление заказа — Kaluga-Fence{% endblock %}
+
+{% block content %}
+<h2>Оформление заказа</h2>
+
+<p><strong>Товары:</strong></p>
+<ul>
+  {% for product in products %}
+  <li>{{ product.name }} — {{ product.price }} ₽</li>
+  {% endfor %}
+</ul>
+<p><strong>Итого: {{ total }} ₽</strong></p>
+
+<h4 class="mt-4">Контактная информация</h4>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Отправить заказ</button>
+</form>
+
+<div class="mt-4">
+  <a href="{% url 'cart' %}" class="text-decoration-none">← Вернуться в корзину</a>
+</div>
+{% endblock %}
