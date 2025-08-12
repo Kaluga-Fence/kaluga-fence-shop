@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% block title %}Корзина — Kaluga-Fence{% endblock %}
+
+{% block content %}
+<h2>Ваша корзина</h2>
+
+{% if products %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Товар</th>
+      <th>Размер</th>
+      <th>Цена</th>
+      <th>Действие</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.size }}</td>
+      <td>{{ product.price }} ₽</td>
+      <td>
+        <a href="{% url 'remove_from_cart' product.id %}" class="text-danger">
+          <i class="fas fa-trash"></i> Удалить
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <th colspan="2">Итого:</th>
+      <th>{{ total }} ₽</th>
+      <th></th>
+    </tr>
+  </tbody>
+</table>
+
+<div class="text-end">
+  <a href="{% url 'checkout' %}" class="btn btn-primary">Оформить заказ</a>
+</div>
+
+{% else %}
+<p>Корзина пуста. <a href="{% url 'catalog' %}">Перейти в каталог</a></p>
+{% endif %}
+
+{% endblock %}
