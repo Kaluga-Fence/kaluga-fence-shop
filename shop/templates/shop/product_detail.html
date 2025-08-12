@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% block title %}{{ product.name }} — Kaluga-Fence{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    {% if product.image %}
+      <img src="{{ product.image.url }}" class="w-100 rounded" alt="{{ product.name }}">
+    {% else %}
+      <img src="https://via.placeholder.com/500x400/1a3c6e/ffffff?text={{ product.name }}" class="w-100 rounded" alt="{{ product.name }}">
+    {% endif %}
+  </div>
+  <div class="col-md-6">
+    <h1>{{ product.name }}</h1>
+    <p class="text-muted">{{ product.get_category_display }}</p>
+    <h3 class="text-primary">{{ product.price }} ₽</h3>
+
+    <table class="table mt-4">
+      <tr><th>Размер</th><td>{{ product.size }}</td></tr>
+      {% if product.thickness %}
+      <tr><th>Толщина</th><td>{{ product.thickness }}</td></tr>
+      {% endif %}
+      <tr><th>Материал</th><td>Оцинкованная сталь с ПВХ-покрытием</td></tr>
+    </table>
+
+    {% if product.description %}
+    <div class="mb-4">
+      <h5>Описание</h5>
+      <p>{{ product.description }}</p>
+    </div>
+    {% endif %}
+
+    <div class="mt-4">
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-lg">
+        <i class="fas fa-shopping-cart"></i> Добавить в корзину
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5">
+  <a href="{% url 'catalog' %}" class="text-decoration-none">
+    ← Вернуться в каталог
+  </a>
+</div>
+{% endblock %}
