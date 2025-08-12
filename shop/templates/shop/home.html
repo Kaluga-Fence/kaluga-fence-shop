@@ -1,0 +1,101 @@
+{% extends 'shop/base.html' %}
+{% block title %}Kaluga-Fence — 3D-панели, сетки, габионы{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <h1>Надёжные металлоконструкции для ландшафта</h1>
+  <p>3D-панели • Сварные сетки • Готовые габионы</p>
+  <div class="mt-4">
+    <a href="{% url 'catalog' %}" class="btn btn-light btn-lg px-4">Смотреть каталог</a>
+  </div>
+</div>
+
+<!-- Преимущества -->
+<div class="my-5 text-center">
+  <h2>Почему выбирают нас?</h2>
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="p-3">
+        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+        <h4>Качество</h4>
+        <p>Оцинкованная сталь, ПВХ-покрытие, устойчивость к коррозии</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-3">
+        <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+        <h4>Доставка</h4>
+        <p>По Калужской области и в другие регионы России</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="p-3">
+        <i class="fas fa-tools fa-3x text-primary mb-3"></i>
+        <h4>Монтаж</h4>
+        <p>Консультация и помощь в установке — бесплатно</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3D-панели -->
+<div class="my-5">
+  <h3 class="text-center mb-4">Популярные 3D-панели</h3>
+  <div class="row">
+    {% for product in panels %}
+    <div class="col-md-4 mb-4">
+      <div class="product-card">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="product-img w-100" alt="{{ product.name }}">
+        {% else %}
+          <img src="https://via.placeholder.com/300x200/1a3c6e/ffffff?text=3D-Panels" class="product-img w-100" alt="3D-панель">
+        {% endif %}
+        <div class="p-3">
+          <h5>{{ product.name }}</h5>
+          <p><strong>Размер:</strong> {{ product.size }}<br>
+             <strong>Толщина:</strong> {{ product.thickness|default:"4-6 мм" }}</p>
+          <p class="text-primary"><strong>{{ product.price }} ₽</strong></p>
+          <div class="d-flex gap-2">
+            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm">В корзину</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Готовые габионы -->
+<div class="my-5">
+  <h3 class="text-center mb-4">Готовые габионы</h3>
+  <div class="row">
+    {% for product in gabions %}
+    <div class="col-md-4 mb-4">
+      <div class="product-card">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="product-img w-100" alt="{{ product.name }}">
+        {% else %}
+          <img src="https://via.placeholder.com/300x200/2c5282/ffffff?text=Gabions" class="product-img w-100" alt="Габион">
+        {% endif %}
+        <div class="p-3">
+          <h5>{{ product.name }}</h5>
+          <p><strong>Размер:</strong> {{ product.size }}</p>
+          <p class="text-primary"><strong>{{ product.price }} ₽</strong></p>
+          <div class="d-flex gap-2">
+            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm">В корзину</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Кнопка в каталог -->
+<div class="text-center my-5">
+  <a href="{% url 'catalog' %}" class="btn btn-outline-primary px-5">Весь каталог →</a>
+</div>
+
+{% endblock %}
