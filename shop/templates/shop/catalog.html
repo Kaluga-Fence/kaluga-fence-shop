@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% block title %}Каталог товаров — Kaluga-Fence{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Каталог продукции</h2>
+
+<div class="row mb-4">
+  <div class="col-12">
+    <a href="{% url 'catalog' %}" class="btn btn-outline-primary">Все товары</a>
+    <a href="?category=panel" class="btn btn-outline-secondary">3D-панели</a>
+    <a href="?category=mesh" class="btn btn-outline-secondary">Сетки</a>
+    <a href="?category=gabion" class="btn btn-outline-secondary">Габионы</a>
+  </div>
+</div>
+
+<div class="row">
+  {% for product in products %}
+  <div class="col-md-4 mb-4">
+    <div class="product-card">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="product-img w-100" alt="{{ product.name }}">
+      {% else %}
+        <img src="https://via.placeholder.com/300x200/3a5c8e/ffffff?text={{ product.category }}" class="product-img w-100" alt="{{ product.name }}">
+      {% endif %}
+      <div class="p-3">
+        <h5>{{ product.name }}</h5>
+        <p><strong>Тип:</strong> {{ product.get_category_display }}</p>
+        <p><strong>Размер:</strong> {{ product.size }}</p>
+        {% if product.thickness %}
+        <p><strong>Толщина:</strong> {{ product.thickness }}</p>
+        {% endif %}
+        <p class="text-primary"><strong>{{ product.price }} ₽</strong></p>
+        <div class="d-flex gap-2">
+          <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary btn-sm">Подробнее</a>
+          <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-sm">В корзину</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12 text-center">
+    <p>Товары не найдены.</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
